@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>扎小人 · 在线扎小人（解压整活）</title>
+<meta name="description" content="扎小人：在线扎小人解压整活。给小人写上让你头疼的事，一口气扎满一百针，纯属娱乐。">
+<style>
+:root{--ink:#14100d;--ink2:#1d1814;--paper:#f5eddd;--red:#b3372c;--gold:#d8a24a;--line:#2a2320}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);background-image:radial-gradient(1200px 600px at 50% -10%,rgba(179,55,44,.14),transparent 60%),radial-gradient(800px 500px at 80% 110%,rgba(216,162,74,.07),transparent 60%);color:var(--paper);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 16px 48px}
+.kai{font-family:"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","STSong","SimSun",serif}
+.shop{width:100%;max-width:460px;text-align:center}
+.fu{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:6px}
+.seal{width:56px;height:56px;border-radius:12px;background:var(--red);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);box-shadow:0 4px 14px rgba(179,55,44,.4),inset 0 0 0 2px rgba(255,255,255,.2);overflow:hidden}
+.seal svg{width:46px;height:46px;display:block}
+h1{font-size:34px;letter-spacing:6px;font-weight:700}
+.sub{color:#a89d8c;font-size:13px;letter-spacing:2px;margin-bottom:20px}
+.desk{background:var(--ink2);border:1px solid #2e2620;border-radius:18px;padding:18px 18px 22px;box-shadow:0 18px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);position:relative}
+.toast{position:absolute;top:-14px;left:50%;transform:translateX(-50%) scale(.8);background:var(--red);color:#fff;font-size:13px;padding:6px 16px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap;z-index:5}
+.toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+.plate{background:linear-gradient(180deg,#f8f2e4,#efe4cd);color:var(--line);border-radius:10px;border:1px solid #d9cbae;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:10px 14px;margin:0 auto 14px;max-width:330px;display:flex;align-items:center;gap:8px}
+.plate .label{font-size:13px;color:#7a6a55;flex:none}
+.plate input{flex:1;border:none;background:transparent;outline:none;font-size:16px;font-weight:600;color:var(--line);font-family:inherit;text-align:center;min-width:0}
+.plate input::placeholder{color:#b3a488;font-weight:400}
+.plate input{font-family:"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","STSong",serif;font-size:18px}
+.uploader{display:flex;align-items:center;justify-content:center;gap:10px;margin:-6px auto 12px;max-width:340px}
+.upload-btn{cursor:pointer;padding:7px 16px;font-size:13px;display:inline-flex;align-items:center}
+.upload-btn input{display:none}
+.upload-note{color:#6a5f52;font-size:11px;line-height:1.4;text-align:left}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-end;height:320px;user-select:none;-webkit-user-select:none}
+.stage::before{content:"";position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:240px;height:22px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%)}
+.doll{width:220px;position:relative;cursor:crosshair}
+.doll .face-photo{position:absolute;left:50%;top:66px;width:80px;height:72px;transform:translate(-50%,-50%);border-radius:50% 50% 46% 46%/54% 54% 46% 46%;object-fit:cover;display:none;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 3px #f5eddd}
+.doll.has-photo .face-photo{display:block}
+.doll-inner{transition:transform 1s cubic-bezier(.34,1.4,.5,1)}
+.doll.wob .doll-inner{animation:wob .38s ease}
+.doll.ko .doll-inner{transform:rotate(78deg) translate(34px,26px);transition:transform .9s cubic-bezier(.34,1.56,.44,1)}
+@keyframes wob{0%{transform:rotate(0)}25%{transform:rotate(-5deg)}55%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}100%{transform:rotate(0)}}
+.doll svg{width:100%;display:block;overflow:visible}
+.doll .face{display:none}
+.doll .photo{display:none}
+.doll[data-face="0"] .f0,.doll[data-face="1"] .f1,.doll[data-face="2"] .f2,.doll[data-face="3"] .f3,.doll[data-face="4"] .f4{display:block}
+.doll.ko .face{display:none}
+.doll.ko .f5{display:block}
+.doll.has-photo .photo{display:block}
+.doll.has-photo .face{display:none}
+.drop{position:absolute;width:14px;height:14px;border-radius:50% 50% 50% 4px;background:radial-gradient(circle at 35% 30%,#d8433a,#7d1a14 70%);transform:translate(-50%,-50%) scale(0);pointer-events:none;z-index:3;animation:dropfly .7s ease-out forwards}
+@keyframes dropfly{0%{transform:translate(-50%,-50%) scale(0)}35%{transform:translate(-50%,-64%) scale(1.15)}100%{transform:translate(-58%,-30%) scale(.9);opacity:0}}
+.stain{position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,rgba(125,26,20,.8),rgba(125,26,20,.15) 75%);transform:translate(-50%,-50%);pointer-events:none;z-index:1}
+.stamp{position:absolute;top:26px;right:4px;z-index:6;border:3px solid var(--red);border-radius:8px;color:var(--red);font-size:20px;padding:6px 10px;letter-spacing:4px;transform:rotate(12deg) scale(0);opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.44,1),opacity .2s;background:rgba(245,237,221,.06)}
+.stamp.on{transform:rotate(12deg) scale(1);opacity:1}
+.count{margin:14px 0 4px;font-size:15px;color:#c9bda6}
+.count b{color:var(--gold);font-size:22px;font-weight:700}
+.goal{height:8px;background:#2a221c;border-radius:99px;overflow:hidden;margin:10px auto 16px;max-width:300px}
+.goal i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .3s;border-radius:99px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;border-radius:99px;font-size:14px;padding:10px 20px;transition:transform .15s,box-shadow .15s;font-family:inherit}
+.btn:active{transform:scale(.95)}
+.btn-ghost{background:transparent;color:#c9bda6;border:1px solid #3d332a}
+.btn-ghost:hover{border-color:#6a5a48;color:var(--paper)}
+.confetti{position:fixed;top:-12px;width:8px;height:14px;z-index:99;pointer-events:none;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+.wiki{max-width:460px;width:100%;margin-top:28px}
+.wiki details{background:var(--ink2);border:1px solid #2e2620;border-radius:14px;padding:14px 18px;color:#c9bda6;font-size:14px;line-height:1.9}
+.wiki summary{cursor:pointer;color:var(--gold);font-size:15px;letter-spacing:1px}
+.wiki p{margin-top:10px}
+.wiki .k{color:var(--paper);font-weight:600}
+footer{margin-top:26px;color:#6a5f52;font-size:12px;line-height:1.8;text-align:center;max-width:380px}
+footer .warn{color:#9c8f7d}
+</style>
+</head>
+<body>
+<div class="shop">
+  <div class="fu">
+    <div class="seal">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="8" fill="#2a2320"/><circle cx="34" cy="14" r="8" fill="#2a2320"/>
+        <ellipse cx="24" cy="24" rx="17" ry="16" fill="#f5eddd"/>
+        <path d="M7 22 a17 16 0 0 1 34 0 q-8 -8 -17 -8 q-9 0 -17 8 z" fill="#2a2320"/>
+        <path d="M17 22 q3 -3 6 0" stroke="#2a2320" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M27 22 q3 -3 6 0" stroke="#2a2320" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M20 31 q4 4 8 0" stroke="#2a2320" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="kai">扎小人</h1>
+  </div>
+  <div class="sub">在线扎小人 · 纯属整活 · 免费不限次</div>
+  <div class="desk">
+    <div class="toast" id="toast"></div>
+    <div class="plate"><span class="label">这次扎</span><input id="target" type="text" maxlength="10" placeholder="周一、闹钟、期末考…" autocomplete="off"></div>
+    <div class="uploader">
+      <label class="btn btn-ghost upload-btn">
+        贴张脸
+        <input type="file" id="photo" accept="image/*">
+      </label>
+      <span class="upload-note" id="uploadNote">只在你手机里处理，不上传</span>
+    </div>
+    <div class="stage" id="stage">
+      <div class="stamp kai" id="stamp">扎满一百针</div>
+      <div class="doll" id="doll" data-face="0">
+        <div class="doll-inner">
+          <img id="facePhoto" class="face-photo" alt="">
+          <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="54" cy="38" r="16" fill="#2a2320"/><circle cx="146" cy="38" r="16" fill="#2a2320"/>
+            <ellipse cx="100" cy="66" rx="44" ry="40" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M56 60 a44 40 0 0 1 88 0 q-17 -19 -44 -19 q-27 0 -44 19 z" fill="#2a2320"/>
+            <clipPath id="faceClip"><ellipse cx="100" cy="66" rx="42" ry="38"/></clipPath>
+            <image id="faceImg" class="photo" clip-path="url(#faceClip)" x="58" y="28" width="84" height="76" preserveAspectRatio="xMidYMid slice"/>
+            <g class="face f0" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M78 62 q6 -7 12 0"/><path d="M110 62 q6 -7 12 0"/>
+              <path d="M90 82 q10 8 20 0"/>
+              <circle cx="70" cy="76" r="5" fill="#e8a89a" stroke="none" opacity=".7"/>
+              <circle cx="130" cy="76" r="5" fill="#e8a89a" stroke="none" opacity=".7"/>
+            </g>
+            <g class="face f1" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M78 60 q6 7 12 0"/><path d="M110 60 q6 7 12 0"/>
+              <path d="M88 84 q12 -4 24 0"/>
+            </g>
+            <g class="face f2" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M76 56 l14 6"/><path d="M124 56 l-14 6"/>
+              <path d="M88 86 q6 -5 12 0 q6 5 12 0"/>
+            </g>
+            <g class="face f3" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M80 60 q-4 6 0 12 q4 6 -2 12" stroke-width="3"/>
+              <path d="M120 60 q4 6 0 12 q-4 6 2 12" stroke-width="3"/>
+              <ellipse cx="100" cy="86" rx="8" ry="10" fill="#2a2320" stroke="none"/>
+            </g>
+            <g class="face f4" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M74 54 l16 8"/><path d="M126 54 l-16 8"/>
+              <path d="M92 88 l8 -5 l8 5" stroke-linejoin="round"/>
+            </g>
+            <g class="face f5">
+              <path d="M78 60 l12 -8 m0 8 l-12 -8" stroke="#2a2320" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M110 60 l12 -8 m0 8 l-12 -8" stroke="#2a2320" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="100" cy="86" rx="9" ry="7" fill="#2a2320" stroke="none"/>
+            </g>
+            <path d="M64 108 L136 108 L148 200 L52 200 Z" fill="#b3372c" stroke="#2a2320" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M64 108 L136 108 L132 132 L68 132 Z" fill="#8c2620"/>
+            <text id="apron" x="100" y="152" text-anchor="middle" font-size="26" fill="#f5eddd" opacity=".3" letter-spacing="2">?</text>
+            <path d="M58 168 L142 168" stroke="#d8a24a" stroke-width="4"/>
+            <circle cx="100" cy="168" r="7" fill="#d8a24a" stroke="#2a2320" stroke-width="2"/>
+            <path d="M70 116 L44 148" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="40" cy="154" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M130 116 L156 148" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="160" cy="154" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M84 200 L84 230 M116 200 L116 230" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+            <ellipse cx="80" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+            <ellipse cx="120" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="count">已扎 <b id="cnt">0</b> / 100 针 · <span id="hint">点它，使劲点</span></div>
+    <div class="goal"><i id="bar"></i></div>
+    <div class="btns">
+      <button class="btn btn-ghost" id="reset">重画一张</button>
+      <button class="btn btn-ghost" id="share">分享这个冤种</button>
+    </div>
+  </div>
+  <div class="wiki">
+    <details>
+      <summary>📜 民俗小百科：扎小人是怎么回事？</summary>
+      <p><span class="k">来源：</span>「扎小人」源自中国民间的<span class="k">厌胜术</span>，属于老式巫术民俗——扎一个写有名字的纸人偶，用针扎它，寄托「让某人倒霉」的愿望。常见于古早小说和港产僵尸片里。</p>
+      <p><span class="k">效力：</span>零。它没有任何科学效果，本质是心理投射 + 情绪出口。本站把它改造成纯解压小玩具：把让你上头的「事」（周一、闹钟、期末考）当成小人扎掉。</p>
+      <p><span class="k">提醒：</span>本页面仅供娱乐整活，请勿用于针对现实中具体的人，更别拿它当威胁手段——拿「扎你」去恐吓别人，性质上可能构成威胁恐吓，那不是整活，是麻烦。</p>
+    </details>
+  </div>
+  <footer>
+    <div class="warn">仅供解压整活 · 请勿针对现实中的具体个人</div>
+    扎小人 · 未成年人请勿用本页面进行任何形式的心理骚扰
+  </footer>
+</div>
+<script>
+(function(){
+"use strict";
+var doll=document.getElementById("doll"),stage=document.getElementById("stage"),
+    cnt=document.getElementById("cnt"),bar=document.getElementById("bar"),
+    toast=document.getElementById("toast"),stamp=document.getElementById("stamp"),
+    target=document.getElementById("target"),hintEl=document.getElementById("hint"),
+    apron=document.getElementById("apron"),faceImg=document.getElementById("faceImg"),
+    facePhoto=document.getElementById("facePhoto");
+var GOAL=100,n=0,ko=false,toastTimer=null,audio=null;
+function paintName(){
+  var v=target.value.trim();
+  if(!v){apron.textContent="?";apron.setAttribute("font-size","26");apron.setAttribute("opacity",".3");return}
+  apron.textContent=v;
+  apron.setAttribute("font-family",'"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","STSong",serif');
+  apron.setAttribute("font-size","24");
+  fitText();
+  apron.setAttribute("opacity",".92");
+}
+function fitText(){
+  var s=apron.textContent;
+  if(!s||s==="?")return;
+  var fs=24,MAX=88,w=0;
+  apron.setAttribute("font-size",fs);
+  try{w=apron.getComputedTextLength()}catch(e){w=0}
+  if(w>MAX&&w>0){apron.setAttribute("font-size",Math.max(9,Math.floor(fs*MAX/w)))}
+}
+var hints=[[0,"点它，使劲点"],[10,"脸有点绷不住了"],[30,"疼！但还在硬撑"],[50,"已经顶不住了"],[80,"生死时速"],[100,"扎满，气运已除"]];
+function faceFor(k){return k>=80?4:k>=50?3:k>=30?2:k>=10?1:0}
+function pop(){
+  try{
+    audio=audio||new(window.AudioContext||window.webkitAudioContext)();
+    if(audio.state==="suspended")audio.resume();
+    var t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();
+    o.type="triangle";
+    o.frequency.setValueAtTime(1600+Math.random()*500,t);
+    o.frequency.exponentialRampToValueAtTime(220,t+.09);
+    g.gain.setValueAtTime(.18,t);
+    g.gain.exponentialRampToValueAtTime(.001,t+.1);
+    o.connect(g);g.connect(audio.destination);
+    o.start(t);o.stop(t+.12);
+  }catch(e){}
+}
+function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){toast.classList.remove("show")},1600)}
+function pickHint(k){var out=hints[0][1];for(var i=0;i<hints.length;i++){if(k>=hints[i][0])out=hints[i][1]}return out}
+function confetti(){var cs=["#b3372c","#d8a24a","#f5eddd","#7fb069","#e07a5d"];for(var i=0;i<60;i++){(function(){var p=document.createElement("div");p.className="confetti";p.style.left=Math.random()*100+"vw";p.style.background=cs[i%cs.length];p.style.animationDuration=(1.6+Math.random()*1.4)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";document.body.appendChild(p);setTimeout(function(){p.remove()},3600)})()}}
+function addStain(x,y){var s=document.createElement("div");s.className="stain";s.style.left=x+"px";s.style.top=y+"px";var sz=6+Math.random()*8;s.style.width=sz+"px";s.style.height=sz+"px";stage.appendChild(s);var st=stage.querySelectorAll(".stain");if(st.length>40)st[0].remove()}
+function pierce(cx,cy){if(ko)return;n++;pop();var r=stage.getBoundingClientRect(),x=cx-r.left,y=cy-r.top,d=document.createElement("div");d.className="drop";d.style.left=x+"px";d.style.top=y+"px";stage.appendChild(d);setTimeout(function(){d.remove()},750);addStain(x,y);doll.classList.remove("wob");void doll.offsetWidth;doll.classList.add("wob");cnt.textContent=n;bar.style.width=Math.min(100,n/GOAL*100)+"%";doll.dataset.face=faceFor(n);hintEl.textContent=pickHint(n);if(n===50)showToast("一半了，手别停");if(n===GOAL){ko=true;doll.classList.add("ko");stamp.classList.add("on");confetti();showToast("扎满一百针 · 气运已除！");hintEl.textContent="下一个冤种？"}}
+var holdTimer=null,holdInt=null;
+doll.addEventListener("pointerdown",function(e){e.preventDefault();pierce(e.clientX,e.clientY);holdTimer=setTimeout(function(){holdInt=setInterval(function(){var r=doll.getBoundingClientRect();pierce(r.left+r.width/2+(Math.random()-.5)*r.width*.5,r.top+r.height/2+(Math.random()-.5)*r.height*.5)},220)},500)});
+function rel(){clearTimeout(holdTimer);clearInterval(holdInt);holdTimer=null;holdInt=null}
+doll.addEventListener("pointerup",rel);doll.addEventListener("pointerleave",rel);doll.addEventListener("pointercancel",rel);
+document.getElementById("reset").addEventListener("click",function(){n=0;ko=false;cnt.textContent="0";bar.style.width="0%";doll.dataset.face="0";doll.classList.remove("ko");stamp.classList.remove("on");stage.querySelectorAll(".stain").forEach(function(s){s.remove()});hintEl.textContent="点它，使劲点";showToast("重画一张，再战")});
+document.getElementById("share").addEventListener("click",function(){var name=target.value.trim()||"未知冤种";var msg="我在扎小人扎了 "+n+" 针，目标："+name+"。纯整活，勿当真。"+location.href;if(navigator.share){navigator.share({title:"扎小人",text:msg,url:location.href}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast("复制好了，甩给朋友")}).catch(function(){showToast("复制没成功，手动转发吧")})}else{showToast("不支持分享，截图发吧")}});
+target.addEventListener("keydown",function(e){if(e.key==="Enter")e.target.blur()});
+target.addEventListener("input",paintName);
+window.addEventListener("resize",function(){paintName()});
+paintName();
+document.getElementById("photo").addEventListener("change",function(e){
+  var f=e.target.files&&e.target.files[0];
+  if(!f)return;
+  if(f.size>12*1024*1024){showToast("图太大了，换张小的");e.target.value="";return}
+  var fr=new FileReader();
+  fr.onerror=function(){showToast("这图读不了，换一张")};
+  fr.onload=function(ev){
+    var img=new Image();
+    img.onerror=function(){showToast("这图读不了，换一张")};
+    img.onload=function(){
+      var side=Math.min(img.width,img.height);
+      var cv=document.createElement("canvas");
+      cv.width=180;cv.height=180;
+      var ctx=cv.getContext("2d");
+      ctx.drawImage(img,(img.width-side)/2,(img.height-side)/2,side,side,0,0,180,180);
+      facePhoto.src=cv.toDataURL("image/jpeg",.85);
+      doll.classList.add("has-photo");
+      document.getElementById("uploadNote").textContent="脸贴好了";
+      showToast("换脸成功，开扎");
+    };
+    img.src=ev.target.result;
+  };
+  fr.readAsDataURL(f);
+});
+})();
+</script>
+</body>
+</html>
