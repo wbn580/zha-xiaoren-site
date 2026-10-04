@@ -40,7 +40,7 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .doll svg{width:100%;display:block;overflow:visible}
 .doll .face{display:none}
 .doll .photo{display:none}
-.doll[data-face="0"] .f0,.doll[data-face="1"] .f1,.doll[data-face="2"] .f2,.doll[data-face="3"] .f3,.doll[data-face="4"] .f4{display:block}
+.doll[data-face="0"] .f0,.doll[data-face="1"] .f1,.doll[data-face="2"] .f2,.doll[data-face="3"] .f3,.doll[data-face="4"] .f4,.doll[data-face="5"] .f5{display:block}
 .doll.ko .face{display:none}
 .doll.ko .f5{display:block}
 .doll.has-photo .photo{display:block}
@@ -50,6 +50,30 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .stain{position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,rgba(125,26,20,.8),rgba(125,26,20,.15) 75%);transform:translate(-50%,-50%);pointer-events:none;z-index:1}
 .stamp{position:absolute;top:26px;right:4px;z-index:6;border:3px solid var(--red);border-radius:8px;color:var(--red);font-size:20px;padding:6px 10px;letter-spacing:4px;transform:rotate(12deg) scale(0);opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.44,1),opacity .2s;background:rgba(245,237,221,.06)}
 .stamp.on{transform:rotate(12deg) scale(1);opacity:1}
+.doll-inner{transform-origin:50% 92%}
+.doll[data-face="5"] .f5{display:block}
+.rope{position:absolute;left:50%;top:0;width:5px;height:152px;margin-left:-2.5px;z-index:4;pointer-events:none;opacity:0;transform:scaleY(0);transform-origin:top center;background:repeating-linear-gradient(180deg,#d3bc94 0 7px,#a3855c 7px 14px);border-radius:3px;box-shadow:0 0 8px rgba(0,0,0,.5)}
+.arrow{position:absolute;left:50%;top:50%;width:132px;height:8px;margin:-4px 0 0 6px;z-index:4;pointer-events:none;opacity:0;transform:translateX(150px) rotate(-16deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.15),opacity .15s}
+.arrow::before{content:"";position:absolute;left:-2px;top:50%;width:17px;height:17px;margin-top:-8.5px;background:#2a2320;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.arrow::after{content:"";position:absolute;right:0;top:50%;width:24px;height:18px;margin-top:-9px;background:#b3372c;clip-path:polygon(0 0,100% 26%,100% 74%,0 100%);box-shadow:0 0 6px rgba(0,0,0,.4)}
+.wound{position:absolute;left:50%;top:57%;width:78px;height:34px;margin:-17px 0 0 -39px;z-index:1;pointer-events:none;opacity:0;transform:scale(.15);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1);background:radial-gradient(ellipse at center,rgba(96,18,14,.92),rgba(125,26,20,.4) 62%,transparent 78%)}
+.puff{position:absolute;left:50%;top:44%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;z-index:5;pointer-events:none;background:radial-gradient(circle,rgba(206,194,170,.6),rgba(206,194,170,0) 70%);opacity:0;animation:puffup 1.5s ease-out forwards}
+@keyframes puffup{0%{opacity:.75;transform:translate(0,0) scale(.35)}100%{opacity:0;transform:translate(var(--dx,0px),-104px) scale(1.9)}}
+.stage.end-hang .rope{opacity:1;transform:scaleY(1);transition:opacity .2s,transform .55s cubic-bezier(.3,1.3,.5,1)}
+.stage.end-hang .doll-inner{animation:sway 2.8s ease-in-out .55s infinite}
+@keyframes sway{0%,100%{transform:translateY(-94px) rotate(7deg)}50%{transform:translateY(-94px) rotate(-5deg)}}
+.stage.end-bleed .doll-inner{transform:translate(14px,16px) rotate(64deg)}
+.stage.end-belly .doll-inner{transform:translate(2px,2px);animation:heave .34s ease 4}
+.stage.end-belly .wound{opacity:1;transform:scale(1)}
+@keyframes heave{0%,100%{transform:translate(2px,2px)}50%{transform:translate(-7px,-4px) rotate(-2deg)}}
+.stage.end-kneel .doll-inner{transform:translateY(58px) scaleY(.82)}
+.stage.end-arrow .doll-inner{transform:translate(6px,10px) rotate(-74deg) translate(22px,16px)}
+.stage.end-arrow .arrow{opacity:1;transform:translateX(-8px) rotate(-14deg)}
+.stage.end-smoke .doll-inner{transform:translateY(-26px) scale(.55);opacity:0;transition:transform .7s ease-in,opacity .7s ease-in}
+.stage.end-smoke .f1{display:block}
+.arcana{max-width:300px;margin:14px auto 0;text-align:center;color:#6a5f52;font-size:12px;letter-spacing:1px;line-height:1.7;min-height:20px}
+.arcana b{color:var(--gold);font-weight:600}
+.arcana:empty{display:none}
 .count{margin:14px 0 4px;font-size:15px;color:#c9bda6}
 .count b{color:var(--gold);font-size:22px;font-weight:700}
 .goal{height:8px;background:#2a221c;border-radius:99px;overflow:hidden;margin:10px auto 16px;max-width:300px}
@@ -97,9 +121,12 @@ footer .warn{color:#9c8f7d}
       <span class="upload-note" id="uploadNote">只在你手机里处理，不上传</span>
     </div>
     <div class="stage" id="stage">
+      <div class="rope" id="rope"></div>
+      <div class="arrow" id="arrow"></div>
       <div class="stamp kai" id="stamp">扎满一百针</div>
       <div class="doll" id="doll" data-face="0">
         <div class="doll-inner">
+          <div class="wound" id="wound"></div>
           <img id="facePhoto" class="face-photo" alt="">
           <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
             <circle cx="54" cy="38" r="16" fill="#2a2320"/><circle cx="146" cy="38" r="16" fill="#2a2320"/>
@@ -152,6 +179,7 @@ footer .warn{color:#9c8f7d}
       </div>
     </div>
     <div class="count">已扎 <b id="cnt">0</b> / 100 针 · <span id="hint">点它，使劲点</span></div>
+    <div class="arcana kai" id="arcana"></div>
     <div class="goal"><i id="bar"></i></div>
     <div class="btns">
       <button class="btn btn-ghost" id="reset">重画一张</button>
@@ -179,7 +207,9 @@ var doll=document.getElementById("doll"),stage=document.getElementById("stage"),
     toast=document.getElementById("toast"),stamp=document.getElementById("stamp"),
     target=document.getElementById("target"),hintEl=document.getElementById("hint"),
     apron=document.getElementById("apron"),faceImg=document.getElementById("faceImg"),
-    facePhoto=document.getElementById("facePhoto");
+    facePhoto=document.getElementById("facePhoto"),rope=document.getElementById("rope"),
+    arrowEl=document.getElementById("arrow"),wound=document.getElementById("wound"),
+    arcana=document.getElementById("arcana");
 var GOAL=100,n=0,ko=false,toastTimer=null,audio=null;
 function paintName(){
   var v=target.value.trim();
@@ -216,19 +246,78 @@ function pop(){
 }
 function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){toast.classList.remove("show")},1600)}
 function pickHint(k){var out=hints[0][1];for(var i=0;i<hints.length;i++){if(k>=hints[i][0])out=hints[i][1]}return out}
+// ---- 落幕系统：每种死法一种收场，抽样抽到
+var ENDINGS={
+  hang:{cls:"end-hang",face:"5",stamp:"吊死",toast:"白绫一条，梁上结了绳",line:"气数尽了。",hint:"这个冤种吊上了梁"},
+  bleed:{cls:"end-bleed",face:"4",stamp:"吐血",toast:"一口血喷在纸上，红透了",line:"血不饶人。",hint:"这个冤种吐血三升"},
+  belly:{cls:"end-belly",face:"3",stamp:"切腹",toast:"腹上一道，肠子流了满地",line:"开膛破肚。",hint:"这个冤种挨了一刀"},
+  kneel:{cls:"end-kneel",face:"3",stamp:"下跪",toast:"双膝一软，跪着认了",line:"跪下磕头。",hint:"这个冤种跪下了"},
+  arrow:{cls:"end-arrow",face:"4",stamp:"中箭",toast:"一箭穿胸，人钉在墙上",line:"一箭穿心。",hint:"这个冤种中箭了"},
+  smoke:{cls:"end-smoke",face:"1",stamp:"烟消",toast:"一缕青烟，散了",line:"散了。",hint:"这个冤种散了"}
+};
+var ORDER=["hang","bleed","belly","kneel","arrow","smoke"];
+var seen={},rounds=0,lastEnd=null;
+function loadSeen(){try{seen=JSON.parse(localStorage.getItem("zx_endings")||"{}")||{};}catch(e){seen={}}
+  if(typeof seen!=="object"||seen===null)seen={}}
+function saveSeen(){try{localStorage.setItem("zx_endings",JSON.stringify(seen))}catch(e){}}
+loadSeen();
+function endingCount(){var n=0;for(var i=0;i<ORDER.length;i++){if(seen[ORDER[i]])n++}return n}
+function endingTotal(){return ORDER.length}
+function drawEnding(){
+  var unseen=ORDER.filter(function(k){return !seen[k]});
+  if(lastEnd&&unseen.length>1)unseen=unseen.filter(function(k){return k!==lastEnd});
+  var pool=unseen.length?unseen:ORDER;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function endingTag(){var c=endingCount(),t=endingTotal();
+  return rounds?"第 "+rounds+" 盘 · 已见 "+c+"/"+t+" 种落幕":"第一盘"}
+function clue(){
+  // 隐晦线索：不直说有几个，只在见过的还不够时轻声提一句
+  var c=endingCount(),t=endingTotal();
+  if(c===0)return "这纸人命硬得很，未必每次都落得一样。";
+  if(c<t)return "还有 <b>"+(t-c)+"</b> 种没见过 —— 多画几张。";
+  return "六种落幕都见过了，你比扎小人还熟悉它。";
+}
+function arcanaText(){
+  var c=endingCount(),t=endingTotal();
+  if(c===0)return "<b>书上说</b>：扎小人一百针，未必每次都断在同一口气上。";
+  if(c<t)return clue();
+  return "全本已阅 · 六种落幕，一一应验。";
+}
+function resetStage(){
+  stage.className="stage";
+  arcana.innerHTML="";
+  if(wound)wound.style.opacity="0";
+}
+function fireEnding(){
+  var key=drawEnding(),e=ENDING[key];
+  rounds++;
+  seen[key]=true;saveSeen();
+  lastEnd=key;
+  ko=true;stamp.classList.add("on");
+  stamp.textContent=e.stamp;
+  stage.classList.add(e.cls);
+  doll.dataset.face=e.face;
+  confetti();
+  showToast(e.toast);
+  hintEl.textContent=e.hint;
+  arcana.innerHTML=arcanaText();
+  if(key==="smoke"){var p=document.createElement("div");p.className="puff";stage.appendChild(p);setTimeout(function(){p.remove()},1600)}
+}
 function confetti(){var cs=["#b3372c","#d8a24a","#f5eddd","#7fb069","#e07a5d"];for(var i=0;i<60;i++){(function(){var p=document.createElement("div");p.className="confetti";p.style.left=Math.random()*100+"vw";p.style.background=cs[i%cs.length];p.style.animationDuration=(1.6+Math.random()*1.4)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";document.body.appendChild(p);setTimeout(function(){p.remove()},3600)})()}}
 function addStain(x,y){var s=document.createElement("div");s.className="stain";s.style.left=x+"px";s.style.top=y+"px";var sz=6+Math.random()*8;s.style.width=sz+"px";s.style.height=sz+"px";stage.appendChild(s);var st=stage.querySelectorAll(".stain");if(st.length>40)st[0].remove()}
-function pierce(cx,cy){if(ko)return;n++;pop();var r=stage.getBoundingClientRect(),x=cx-r.left,y=cy-r.top,d=document.createElement("div");d.className="drop";d.style.left=x+"px";d.style.top=y+"px";stage.appendChild(d);setTimeout(function(){d.remove()},750);addStain(x,y);doll.classList.remove("wob");void doll.offsetWidth;doll.classList.add("wob");cnt.textContent=n;bar.style.width=Math.min(100,n/GOAL*100)+"%";doll.dataset.face=faceFor(n);hintEl.textContent=pickHint(n);if(n===50)showToast("一半了，手别停");if(n===GOAL){ko=true;doll.classList.add("ko");stamp.classList.add("on");confetti();showToast("扎满一百针 · 气运已除！");hintEl.textContent="下一个冤种？"}}
+function pierce(cx,cy){if(ko)return;n++;pop();var r=stage.getBoundingClientRect(),x=cx-r.left,y=cy-r.top,d=document.createElement("div");d.className="drop";d.style.left=x+"px";d.style.top=y+"px";stage.appendChild(d);setTimeout(function(){d.remove()},750);addStain(x,y);doll.classList.remove("wob");void doll.offsetWidth;doll.classList.add("wob");cnt.textContent=n;bar.style.width=Math.min(100,n/GOAL*100)+"%";doll.dataset.face=faceFor(n);hintEl.textContent=pickHint(n);if(n===50)showToast("一半了，手别停");if(n===GOAL)fireEnding()}
 var holdTimer=null,holdInt=null;
 doll.addEventListener("pointerdown",function(e){e.preventDefault();pierce(e.clientX,e.clientY);holdTimer=setTimeout(function(){holdInt=setInterval(function(){var r=doll.getBoundingClientRect();pierce(r.left+r.width/2+(Math.random()-.5)*r.width*.5,r.top+r.height/2+(Math.random()-.5)*r.height*.5)},220)},500)});
 function rel(){clearTimeout(holdTimer);clearInterval(holdInt);holdTimer=null;holdInt=null}
 doll.addEventListener("pointerup",rel);doll.addEventListener("pointerleave",rel);doll.addEventListener("pointercancel",rel);
-document.getElementById("reset").addEventListener("click",function(){n=0;ko=false;cnt.textContent="0";bar.style.width="0%";doll.dataset.face="0";doll.classList.remove("ko");stamp.classList.remove("on");stage.querySelectorAll(".stain").forEach(function(s){s.remove()});hintEl.textContent="点它，使劲点";showToast("重画一张，再战")});
+document.getElementById("reset").addEventListener("click",function(){n=0;ko=false;cnt.textContent="0";bar.style.width="0%";doll.dataset.face="0";doll.classList.remove("ko");stamp.classList.remove("on");stamp.textContent="扎满一百针";resetStage();stage.querySelectorAll(".stain").forEach(function(s){s.remove()});hintEl.textContent="点它，使劲点";showToast("重画一张，再战")});
 document.getElementById("share").addEventListener("click",function(){var name=target.value.trim()||"未知冤种";var msg="我在扎小人扎了 "+n+" 针，目标："+name+"。纯整活，勿当真。"+location.href;if(navigator.share){navigator.share({title:"扎小人",text:msg,url:location.href}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast("复制好了，甩给朋友")}).catch(function(){showToast("复制没成功，手动转发吧")})}else{showToast("不支持分享，截图发吧")}});
 target.addEventListener("keydown",function(e){if(e.key==="Enter")e.target.blur()});
 target.addEventListener("input",paintName);
 window.addEventListener("resize",function(){paintName()});
 paintName();
+arcana.innerHTML=arcanaText();
 document.getElementById("photo").addEventListener("change",function(e){
   var f=e.target.files&&e.target.files[0];
   if(!f)return;
