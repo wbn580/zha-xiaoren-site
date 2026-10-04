@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>扎小人 · 在线扎小人（解压整活）</title>
 <meta name="description" content="扎小人：在线扎小人解压整活。给小人写上让你头疼的事，一口气扎满一百针，纯属娱乐。">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="favicon.png">
 <style>
 :root{--ink:#14100d;--ink2:#1d1814;--paper:#f5eddd;--red:#b3372c;--gold:#d8a24a;--line:#2a2320}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -60,6 +63,40 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .wound{position:absolute;left:50%;top:57%;width:78px;height:34px;margin:-17px 0 0 -39px;z-index:1;pointer-events:none;opacity:0;transform:scale(.15);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1);background:radial-gradient(ellipse at center,rgba(96,18,14,.92),rgba(125,26,20,.4) 62%,transparent 78%)}
 .puff{position:absolute;left:50%;top:44%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;z-index:5;pointer-events:none;background:radial-gradient(circle,rgba(206,194,170,.6),rgba(206,194,170,0) 70%);opacity:0;animation:puffup 1.5s ease-out forwards}
 @keyframes puffup{0%{opacity:.75;transform:translate(0,0) scale(.35)}100%{opacity:0;transform:translate(var(--dx,0px),-104px) scale(1.9)}}
+#wxSheet{position:fixed;inset:0;z-index:200}
+.wx-mask{position:absolute;inset:0;background:rgba(0,0,0,.66)}
+.wx-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,330px);background:#1d1814;border:1px solid #3d332a;border-radius:16px;padding:18px 18px 14px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.wx-title{color:#f5eddd;font-size:16px;letter-spacing:2px;margin-bottom:14px;font-family:"Kaiti SC","STKaiti","KaiTi",serif}
+.wx-row{display:block;cursor:pointer}
+.wx-row img{width:100%;border-radius:10px;border:1px solid #3d332a;display:block}
+.wx-row span{display:block;margin-top:8px;color:#d8a24a;font-size:12px;letter-spacing:1px}
+.wx-tip{margin-top:14px;color:#8f8674;font-size:12px;line-height:1.7}
+.wx-close{margin-top:12px;padding:9px;border-radius:99px;border:1px solid #3d332a;color:#c9bda6;font-size:13px;cursor:pointer}
+.stage.end-hang #gTrailA{opacity:1}
+.stage.end-hang #gTrailB{opacity:.85}
+.stage.end-hang #gDripA{opacity:1}
+.stage.end-hang #gDripB{opacity:.8}
+.stage.end-hang #gPoolA{opacity:.8}
+.stage.end-bleed #gMist{opacity:1}
+.stage.end-bleed #gPoolA{opacity:1}
+.stage.end-bleed #gTrailB{opacity:.9}
+.stage.end-bleed #gDripA{opacity:1}
+.stage.end-bleed #gDripB{opacity:.7}
+.stage.end-belly #gSplat{opacity:1}
+.stage.end-belly #gTrailB{opacity:1}
+.stage.end-belly #gTrailA{opacity:.8}
+.stage.end-belly #gGush{opacity:1}
+.stage.end-belly #gPoolA{opacity:.95}
+.stage.end-belly #gPoolB{opacity:.7}
+.stage.end-belly #gDripA{opacity:.85}
+.stage.end-kneel #gPoolB{opacity:.8}
+.stage.end-kneel #gDripB{opacity:.7}
+.stage.end-arrow #gGush{opacity:1}
+.stage.end-arrow #gTrailA{opacity:1}
+.stage.end-arrow #gPoolA{opacity:.95}
+.stage.end-arrow #gPoolB{opacity:.85}
+.stage.end-arrow #gDripA{opacity:1}
+.stage.end-arrow #gDripB{opacity:.7}
 .stage.end-hang .rope{opacity:1;transform:scaleY(1);transition:opacity .2s,transform .55s cubic-bezier(.3,1.3,.5,1)}
 .stage.end-hang .doll-inner{animation:sway 3s ease-in-out .55s infinite;transition:none}
 @keyframes sway{0%,100%{transform:translateY(-62px) rotate(5deg)}50%{transform:translateY(-62px) rotate(-3deg)}}
@@ -69,14 +106,27 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .stage.end-belly .doll-inner{transform:translate(0,16px) rotate(7deg) scaleY(.9);animation:heave .34s ease 4}
 .stage.end-belly .wound{opacity:1;transform:scale(1)}
 @keyframes heave{0%,100%{transform:translate(0,16px) rotate(7deg) scaleY(.9)}50%{transform:translate(-6px,10px) rotate(3deg) scaleY(.9)}}
-.stage.end-kneel .doll-inner{transform:translateY(30px) scaleY(.86) scaleX(1.05)}
+.stage.end-kneel .doll{transform-origin:50% 50%}
+.stage.end-kneel .doll-inner{transform-origin:50% 50%;transform:translate(0,34px) rotate(-84deg) scaleX(1.06)}
 .stage.end-arrow .doll-inner{transform:translate(-14px,6px) rotate(-14deg)}
 .stage.end-arrow .arrow{opacity:1;transform:translateX(0) rotate(-13deg)}
-.stage.end-smoke .doll-inner{transform:translateY(-18px) scale(.5);opacity:0;transition:transform .7s ease-in,opacity .7s ease-in}
-.stage.end-smoke .f1{display:block}
 .stage[class*="end-"] .stain{opacity:0;transition:opacity .6s}
 .arcana{max-width:300px;margin:14px auto 0;text-align:center;color:#6a5f52;font-size:12px;letter-spacing:1px;line-height:1.7;min-height:20px}
-.arcana b{color:var(--gold);font-weight:600}
+.arcana .clue{display:block;margin:0;font-family:"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","SimSun",serif}
+.arcana .ln{display:block;margin-top:2px;font-size:14px;letter-spacing:2px;line-height:1.6}
+.arcana .ln b{font-weight:600}
+.arcana .lead{color:var(--gold);text-shadow:0 0 10px rgba(216,162,74,.45)}
+.arcana .body{color:#b9ab93;text-shadow:0 0 8px rgba(185,171,147,.28)}
+.arcana .body em{font-style:normal;color:#e8dcc6}
+.arcana .hot{color:#e4675a;text-shadow:0 0 12px rgba(228,103,90,.5)}
+.arcana .tail{color:#8f8674}
+.gore{position:absolute;left:50%;pointer-events:none;z-index:3;opacity:0;transition:opacity .45s}
+.gore.drip{top:56%;width:7px;height:7px;border-radius:50% 50% 50% 2px;background:radial-gradient(circle at 35% 30%,#c33,#5e1109 70%)}
+.gore.trail{top:58%;width:16px;height:70px;background:linear-gradient(180deg,rgba(150,22,14,.95),rgba(110,18,12,.15) 78%,transparent);border-radius:40% 40% 60% 60%/12% 12% 88% 88%;filter:blur(.4px)}
+.gore.splat{top:70%;width:74px;height:44px;background:radial-gradient(ellipse at 50% 45%,rgba(122,16,10,.9),rgba(96,12,8,.45) 52%,transparent 76%)}
+.gore.mist{top:50%;width:120px;height:74px;background:radial-gradient(ellipse at 50% 60%,rgba(140,18,12,.55),rgba(120,16,11,.18) 58%,transparent 78%);filter:blur(3px)}
+.gore.puddle{top:78%;width:112px;height:26px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(104,14,9,.9),rgba(90,12,8,.35) 62%,transparent 80%)}
+.gore.gush{top:52%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,rgba(168,26,17,.95),rgba(96,12,8,.35) 68%,transparent 78%);box-shadow:0 0 10px rgba(150,20,12,.5)}
 .arcana:empty{display:none}
 .count{margin:14px 0 4px;font-size:15px;color:#c9bda6}
 .count b{color:var(--gold);font-size:22px;font-weight:700}
@@ -87,6 +137,8 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .btn:active{transform:scale(.95)}
 .btn-ghost{background:transparent;color:#c9bda6;border:1px solid #3d332a}
 .btn-ghost:hover{border-color:#6a5a48;color:var(--paper)}
+.btn-wx{background:linear-gradient(135deg,#2ea85c,#1f7f45);color:#fff;border:none;box-shadow:0 3px 12px rgba(46,168,92,.28)}
+.btn-wx:hover{box-shadow:0 5px 16px rgba(46,168,92,.42)}
 .confetti{position:fixed;top:-12px;width:8px;height:14px;z-index:99;pointer-events:none;animation:cfall linear forwards}
 @keyframes cfall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(105vh) rotate(720deg);opacity:.2}}
 .wiki{max-width:460px;width:100%;margin-top:28px}
@@ -116,7 +168,7 @@ footer .warn{color:#9c8f7d}
   <div class="sub">在线扎小人 · 纯属整活 · 免费不限次</div>
   <div class="desk">
     <div class="toast" id="toast"></div>
-    <div class="plate"><span class="label">这次扎</span><input id="target" type="text" maxlength="10" placeholder="前任、仇人、老板…" autocomplete="off"></div>
+    <div class="plate"><span class="label">这次扎</span><input id="target" type="text" maxlength="10" placeholder="前任、甲方、老板…" autocomplete="off"></div>
     <div class="uploader">
       <label class="btn btn-ghost upload-btn">
         贴张脸
@@ -128,6 +180,15 @@ footer .warn{color:#9c8f7d}
       <div class="rope" id="rope"></div>
       <div class="arrow" id="arrow"></div>
       <div class="pool" id="pool"></div>
+      <div class="gore mist" id="gMist" style="margin-left:-74px"></div>
+      <div class="gore trail" id="gTrailA" style="margin-left:-56px"></div>
+      <div class="gore trail" id="gTrailB" style="margin-left:30px;top:52%;height:56px"></div>
+      <div class="gore gush" id="gGush" style="margin-left:-48px;top:50%"></div>
+      <div class="gore splat" id="gSplat" style="margin-left:-40px"></div>
+      <div class="gore drip" id="gDripA" style="margin-left:12px;top:62%"></div>
+      <div class="gore drip" id="gDripB" style="margin-left:-26px;top:66%"></div>
+      <div class="gore puddle" id="gPoolA" style="margin-left:-58px"></div>
+      <div class="gore puddle" id="gPoolB" style="margin-left:18px;width:78px"></div>
       <div class="stamp kai" id="stamp">扎满一百针</div>
       <div class="doll" id="doll" data-face="0">
         <div class="doll-inner">
@@ -189,13 +250,14 @@ footer .warn{color:#9c8f7d}
     <div class="btns">
       <button class="btn btn-ghost" id="reset">重画一张</button>
       <button class="btn btn-ghost" id="share">分享这个冤种</button>
+      <button class="btn btn-wx" id="shareWx">分享到微信</button>
     </div>
   </div>
   <div class="wiki">
     <details>
       <summary>📜 民俗小百科：扎小人是怎么回事？</summary>
       <p><span class="k">来源：</span>「扎小人」源自中国民间的<span class="k">厌胜术</span>，属于老式巫术民俗——扎一个写有名字的纸人偶，用针扎它，寄托「让某人倒霉」的愿望。常见于古早小说和港产僵尸片里。</p>
-      <p><span class="k">效力：</span>零。它没有任何科学效果，本质是心理投射 + 情绪出口。本站把它改造成纯解压小玩具：把让你上头的「人」（前任、仇人、老板）当成小人扎掉。</p>
+      <p><span class="k">效力：</span>零。它没有任何科学效果，本质是心理投射 + 情绪出口。本站把它改造成纯解压小玩具：把让你上头的「人」（前任、甲方、老板）当成小人扎掉。</p>
       <p><span class="k">提醒：</span>本页面仅供娱乐整活，请勿用于针对现实中具体的人，更别拿它当威胁手段——拿「扎你」去恐吓别人，性质上可能构成威胁恐吓，那不是整活，是麻烦。</p>
     </details>
   </div>
@@ -254,14 +316,13 @@ function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeo
 function pickHint(k){var out=hints[0][1];for(var i=0;i<hints.length;i++){if(k>=hints[i][0])out=hints[i][1]}return out}
 // ---- 落幕系统：每种死法一种收场，抽样抽到
 var ENDINGS={
-  hang:{cls:"end-hang",face:"5",stamp:"吊死",toast:"白绫一条，梁上结了绳",line:"气数尽了。",hint:"这个冤种吊上了梁"},
-  bleed:{cls:"end-bleed",face:"4",stamp:"吐血",toast:"一口血喷在纸上，红透了",line:"血不饶人。",hint:"这个冤种吐血三升"},
-  belly:{cls:"end-belly",face:"3",stamp:"切腹",toast:"腹上一道，肠子流了满地",line:"开膛破肚。",hint:"这个冤种挨了一刀"},
-  kneel:{cls:"end-kneel",face:"3",stamp:"下跪",toast:"双膝一软，跪着认了",line:"跪下磕头。",hint:"这个冤种跪下了"},
-  arrow:{cls:"end-arrow",face:"4",stamp:"中箭",toast:"一箭穿胸，人钉在墙上",line:"一箭穿心。",hint:"这个冤种中箭了"},
-  smoke:{cls:"end-smoke",face:"1",stamp:"烟消",toast:"一缕青烟，散了",line:"散了。",hint:"这个冤种散了"}
+  hang:{cls:"end-hang",face:"5",stamp:"吊死",toast:"白绫一套，梁上挂了半宿",line:"气数尽了。",hint:"眼珠子暴出来，舌头垂到胸口"},
+  bleed:{cls:"end-bleed",face:"4",stamp:"吐血",toast:"一口黑血喷了三尺远",line:"血不饶人。",hint:"血从嘴角、鼻孔、耳朵一起往外冒"},
+  belly:{cls:"end-belly",face:"3",stamp:"切腹",toast:"腹上一道，肠子拖了一地",line:"开膛破肚。",hint:"肚肠拉出来，热气还在冒"},
+  kneel:{cls:"end-kneel",face:"3",stamp:"下跪",toast:"膝盖先碎，骨头从肉里钻出来",line:"跪下磕头。",hint:"两个膝盖骨都碎了，还在磕"},
+  arrow:{cls:"end-arrow",face:"4",stamp:"中箭",toast:"一箭穿胸，把人钉在墙上",line:"一箭穿心。",hint:"箭还插在胸口，血顺着箭杆往下淌"}
 };
-var ORDER=["hang","bleed","belly","kneel","arrow","smoke"];
+var ORDER=["hang","bleed","belly","kneel","arrow"];
 var seen={},rounds=0,lastEnd=null;
 function loadSeen(){try{seen=JSON.parse(localStorage.getItem("zx_endings")||"{}")||{};}catch(e){seen={}}
   if(typeof seen!=="object"||seen===null)seen={}}
@@ -280,15 +341,12 @@ function endingTag(){var c=endingCount(),t=endingTotal();
 function clue(){
   // 隐晦线索：不直说有几个，只在见过的还不够时轻声提一句
   var c=endingCount(),t=endingTotal();
-  if(c===0)return "这纸人命硬得很，未必每次都落得一样。";
-  if(c<t)return "还有 <b>"+(t-c)+"</b> 种没见过 —— 多画几张。";
-  return "六种落幕都见过了，你比扎小人还熟悉它。";
+  var head='<span class="ln lead">书上说</span><span class="ln body">扎小人一百针，<em>未必每次</em><br>都断在同一口气上。</span>';
+  if(c<t)return head+'<span class="ln tail">已见 <b>'+c+'</b>／'+t+' · 还差 <b class="hot">'+(t-c)+'</b> 种</span>';
+  return head+'<span class="ln tail">五种落幕，<b>一一应验</b>。</span>';
 }
 function arcanaText(){
-  var c=endingCount(),t=endingTotal();
-  if(c===0)return "<b>书上说</b>：扎小人一百针，未必每次都断在同一口气上。";
-  if(c<t)return clue();
-  return "全本已阅 · 六种落幕，一一应验。";
+  return clue();
 }
 function resetStage(){
   stage.className="stage";
@@ -309,7 +367,6 @@ function fireEnding(){
   showToast(e.toast);
   hintEl.textContent=e.hint;
   arcana.innerHTML=arcanaText();
-  if(key==="smoke"){var p=document.createElement("div");p.className="puff";stage.appendChild(p);setTimeout(function(){p.remove()},1600)}
 }
 function confetti(){var cs=["#b3372c","#d8a24a","#f5eddd","#7fb069","#e07a5d"];for(var i=0;i<60;i++){(function(){var p=document.createElement("div");p.className="confetti";p.style.left=Math.random()*100+"vw";p.style.background=cs[i%cs.length];p.style.animationDuration=(1.6+Math.random()*1.4)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";document.body.appendChild(p);setTimeout(function(){p.remove()},3600)})()}}
 function addStain(x,y){var s=document.createElement("div");s.className="stain";s.style.left=x+"px";s.style.top=y+"px";var sz=6+Math.random()*8;s.style.width=sz+"px";s.style.height=sz+"px";stage.appendChild(s);var st=stage.querySelectorAll(".stain");if(st.length>40)st[0].remove()}
@@ -321,6 +378,66 @@ doll.addEventListener("pointerup",rel);doll.addEventListener("pointerleave",rel)
 document.getElementById("reset").addEventListener("click",function(){n=0;ko=false;cnt.textContent="0";bar.style.width="0%";doll.dataset.face="0";doll.classList.remove("ko");stamp.classList.remove("on");stamp.textContent="扎满一百针";resetStage();stage.querySelectorAll(".stain").forEach(function(s){s.remove()});hintEl.textContent="点它，使劲点";showToast("重画一张，再战")});
 document.getElementById("share").addEventListener("click",function(){var name=target.value.trim()||"未知冤种";var msg="我在扎小人扎了 "+n+" 针，目标："+name+"。纯整活，勿当真。"+location.href;if(navigator.share){navigator.share({title:"扎小人",text:msg,url:location.href}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast("复制好了，甩给朋友")}).catch(function(){showToast("复制没成功，手动转发吧")})}else{showToast("不支持分享，截图发吧")}});
 target.addEventListener("keydown",function(e){if(e.key==="Enter")e.target.blur()});
+// ---- 分享到微信：微信网页无法直接调起朋友圈，用长按识别二维码引导
+function sharePoster(){
+  var name=target.value.trim()||"这个冤种";
+  var endTxt=hintEl.textContent||"";
+  var badge=(stamp.classList.contains("on")&&stamp.textContent.trim())||"气运已除";
+  var c=document.createElement("canvas");c.width=750;c.height=1000;
+  var x=c.getContext("2d");
+  var g=x.createLinearGradient(0,0,0,1000);g.addColorStop(0,"#1d1814");g.addColorStop(1,"#0d0a08");
+  x.fillStyle=g;x.fillRect(0,0,750,1000);
+  x.fillStyle="#b3372c";x.fillRect(0,0,750,10);
+  x.textAlign="center";
+  x.fillStyle="#f5eddd";x.font='bold 76px "Kaiti SC","STKaiti","KaiTi",serif';
+  x.fillText("扎小人",375,140);
+  x.fillStyle="#d8a24a";x.font='40px "Kaiti SC","STKaiti","KaiTi",serif';
+  x.fillText("我扎了一百针",375,215);
+  x.fillStyle="#c9bda6";x.font='34px sans-serif';
+  x.fillText("目标："+name,375,300);
+  x.fillStyle="#e4675a";x.font='bold 46px "Kaiti SC","STKaiti","KaiTi",serif';
+  wrapText(x,endTxt,375,404,560);
+  x.fillStyle="#8f8674";x.font='28px sans-serif';
+  x.fillText("纯属整活 · 勿当真",375,560);
+  // stamp the ending badge
+  x.save();x.translate(560,830);x.rotate(0.2);
+  x.strokeStyle="#b3372c";x.lineWidth=6;x.strokeRect(-88,-46,176,92);
+  x.fillStyle="#b3372c";x.font='bold 54px "Kaiti SC","STKaiti","KaiTi",serif';
+  x.textAlign="center";x.fillText(badge,0,20);x.restore();
+  x.fillStyle="#6a5f52";x.font='26px sans-serif';x.textAlign="center";
+  x.fillText("bitch.asia",375,940);
+  return c.toDataURL("image/png");
+}
+function wrapText(x,t,cx,y,maxW){
+  var line="",yy=y;
+  for(var i=0;i<t.length;i++){
+    var test=line+t[i];
+    if(x.measureText(test).width>maxW&&line){x.fillText(line,cx,yy);line=t[i];yy+=56}else line=test;
+  }
+  if(line)x.fillText(line,cx,yy);
+}
+function wxSheet(){
+  var url=location.href;
+  var old=document.getElementById("wxSheet");if(old)old.remove();
+  var d=document.createElement("div");d.id="wxSheet";
+  d.innerHTML='<div class="wx-mask"></div><div class="wx-panel">'+
+    '<div class="wx-title">分享到微信</div>'+
+    '<div class="wx-row" id="wxPoster"><img alt="长按保存海报"><span>长按保存海报</span></div>'+
+    '<div class="wx-tip">微信内点右上角 ··· → 分享给朋友 / 朋友圈</div>'+
+    '<div class="wx-close">关闭</div></div>';
+  document.body.appendChild(d);
+  d.querySelector("img").src=sharePoster();
+  d.querySelector(".wx-mask").addEventListener("click",function(){d.remove()});
+  d.querySelector(".wx-close").addEventListener("click",function(){d.remove()});
+  var link=d.querySelector("#wxPoster");
+  if(navigator.clipboard)link.addEventListener("click",function(){navigator.clipboard.writeText(url).then(function(){showToast("链接已复制")}).catch(function(){})});
+}
+document.getElementById("shareWx").addEventListener("click",function(){
+  var ua=navigator.userAgent||"";
+  if(/MicroMessenger/i.test(ua)){wxSheet();return}
+  if(navigator.share){navigator.share({title:"扎小人",text:"我在扎小人扎了一百针，纯整活，勿当真。",url:location.href}).catch(function(){})}
+  else{wxSheet();showToast("长按海报保存，或复制链接发微信")}
+});
 target.addEventListener("input",paintName);
 window.addEventListener("resize",function(){paintName()});
 paintName();
