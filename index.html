@@ -31,13 +31,14 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .upload-btn{cursor:pointer;padding:7px 16px;font-size:13px;display:inline-flex;align-items:center}
 .upload-btn input{display:none}
 .upload-note{color:#6a5f52;font-size:11px;line-height:1.4;text-align:left}
-.stage{position:relative;display:flex;justify-content:center;align-items:flex-end;height:320px;user-select:none;-webkit-user-select:none}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-end;height:320px;margin-top:10px;user-select:none;-webkit-user-select:none}
 .stage::before{content:"";position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:240px;height:22px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%)}
 .doll{width:220px;position:relative;cursor:crosshair}
 .doll .face-photo{position:absolute;left:50%;top:66px;width:80px;height:72px;transform:translate(-50%,-50%);border-radius:50% 50% 46% 46%/54% 54% 46% 46%;object-fit:cover;display:none;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 3px #f5eddd}
 .doll.has-photo .face-photo{display:block}
 .doll-inner{transition:transform 1s cubic-bezier(.34,1.4,.5,1)}
 .doll.wob .doll-inner{animation:wob .38s ease}
+.stage[class*="end-"] .doll-inner{animation:none!important}
 .doll.ko .doll-inner{transform:rotate(78deg) translate(34px,26px);transition:transform .9s cubic-bezier(.34,1.56,.44,1)}
 @keyframes wob{0%{transform:rotate(0)}25%{transform:rotate(-5deg)}55%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}100%{transform:rotate(0)}}
 .doll svg{width:100%;display:block;overflow:visible}
@@ -56,6 +57,10 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .doll-inner{transform-origin:50% 92%}
 .doll[data-face="5"] .f5{display:block}
 .rope{position:absolute;left:50%;top:0;width:5px;height:104px;margin-left:-2.5px;z-index:4;pointer-events:none;opacity:0;transform:scaleY(0);transform-origin:top center;background:repeating-linear-gradient(180deg,#d3bc94 0 7px,#a3855c 7px 14px);border-radius:3px;box-shadow:0 0 8px rgba(0,0,0,.5)}
+.noose{position:absolute;left:50%;top:33%;width:52px;height:52px;margin:-30px 0 0 -26px;z-index:4;pointer-events:none;opacity:0;transform:scale(.4);transition:opacity .3s,transform .45s cubic-bezier(.3,1.5,.5,1)}
+.noose::before{content:"";position:absolute;inset:0;border:6px solid #c9ae86;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.6),inset 0 0 4px rgba(0,0,0,.35)}
+.noose::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:13px;margin:-6px 0 0 -6px;background:#8f7350;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.stage.end-hang .noose{opacity:1;transform:scale(1)}
 .arrow{position:absolute;left:50%;top:58%;width:150px;height:7px;margin:-3.5px 0 0 -66px;z-index:4;pointer-events:none;opacity:0;transform:translateX(210px) rotate(-15deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.15),opacity .15s}
 .arrow::before{content:"";position:absolute;left:-1px;top:50%;width:20px;height:20px;margin-top:-10px;background:#2a2320;clip-path:polygon(100% 50%,0 4%,0 96%)}
 .arrow::after{content:"";position:absolute;left:14px;right:0;top:50%;height:5px;margin-top:-2.5px;background:linear-gradient(90deg,#6a5136 0 74%,var(--red) 74% 100%);border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.55)}
@@ -72,11 +77,22 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .wx-row span{display:block;margin-top:8px;color:#d8a24a;font-size:12px;letter-spacing:1px}
 .wx-tip{margin-top:14px;color:#8f8674;font-size:12px;line-height:1.7}
 .wx-close{margin-top:12px;padding:9px;border-radius:99px;border:1px solid #3d332a;color:#c9bda6;font-size:13px;cursor:pointer}
+/* 切腹：刀 */
+.knife{position:absolute;left:50%;top:56%;width:132px;height:16px;margin:-8px 0 0 6px;z-index:5;pointer-events:none;opacity:0;transform:rotate(14deg) translateY(-10px);transition:opacity .35s,transform .45s cubic-bezier(.2,1.4,.4,1)}
+.knife .blade{position:absolute;left:26px;top:4px;width:104px;height:8px;background:linear-gradient(180deg,#e8e4dc,#9aa0a4 55%,#6d7276);border-radius:2px 5px 5px 2px;box-shadow:0 1px 4px rgba(0,0,0,.6)}
+.knife .blade::after{content:"";position:absolute;right:-8px;top:50%;width:12px;height:12px;margin-top:-6px;background:linear-gradient(135deg,#cfd4d8,#7c8286);clip-path:polygon(0 50%,100% 0,100% 100%)}
+.knife .hilt{position:absolute;left:0;top:2px;width:28px;height:12px;background:repeating-linear-gradient(90deg,#5a3a22 0 4px,#3d2716 4px 7px);border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.6)}
+.knife .hilt::after{content:"";position:absolute;left:-7px;top:50%;width:9px;height:16px;margin-top:-8px;background:#2a2320;border-radius:3px}
+.stage.end-belly .knife{opacity:1;transform:rotate(14deg) translateY(0)}
+/* 吐血：血从嘴里流出来 */
+.mouth{position:absolute;left:50%;top:96px;width:13px;height:0;margin-left:-6.5px;z-index:3;pointer-events:none;opacity:0;border-radius:0 0 60% 60%/0 0 100% 100%;background:linear-gradient(180deg,rgba(150,20,13,.98),rgba(112,16,10,.85) 55%,rgba(96,12,8,.1));box-shadow:0 2px 6px rgba(120,14,9,.5)}
+.stage.end-bleed .mouth{opacity:1;height:96px;transition:height .5s cubic-bezier(.3,1.3,.5,1),opacity .3s}
 .stage.end-hang #gTrailA{opacity:1}
 .stage.end-hang #gTrailB{opacity:.85}
 .stage.end-hang #gDripA{opacity:1}
 .stage.end-hang #gDripB{opacity:.8}
 .stage.end-hang #gPoolA{opacity:.8}
+.stage.end-bleed .doll-inner{transition:transform .8s cubic-bezier(.34,1.2,.44,1)}
 .stage.end-bleed #gMist{opacity:1}
 .stage.end-bleed #gPoolA{opacity:1}
 .stage.end-bleed #gTrailB{opacity:.9}
@@ -98,22 +114,30 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .stage.end-arrow #gDripA{opacity:1}
 .stage.end-arrow #gDripB{opacity:.7}
 .stage.end-hang .rope{opacity:1;transform:scaleY(1);transition:opacity .2s,transform .55s cubic-bezier(.3,1.3,.5,1)}
-.stage.end-hang .doll-inner{animation:sway 3s ease-in-out .55s infinite;transition:none}
+.stage.end-hang .doll-inner{animation:sway 3s ease-in-out .55s infinite!important;transition:none}
 @keyframes sway{0%,100%{transform:translateY(-62px) rotate(5deg)}50%{transform:translateY(-62px) rotate(-3deg)}}
-.stage.end-bleed .doll{transform-origin:50% 50%}
-.stage.end-bleed .doll-inner{transform-origin:50% 22%;transform:translate(4px,44px) rotate(-88deg)}
+.stage.end-bleed .doll{transform:translateY(128px)}
+.stage.end-bleed .doll-inner{transform-origin:50% 22%;transform:translate(4px,52px) rotate(-92deg);animation:none;transition:transform .8s cubic-bezier(.34,1.2,.44,1)}
 .stage.end-bleed .pool{opacity:1;transform:scale(1)}
-.stage.end-belly .doll-inner{transform:translate(0,16px) rotate(7deg) scaleY(.9);animation:heave .34s ease 4}
+.stage.end-belly .doll-inner{transform:translate(0,16px) rotate(7deg) scaleY(.9);animation:heave .34s ease 4!important}
 .stage.end-belly .wound{opacity:1;transform:scale(1)}
 @keyframes heave{0%,100%{transform:translate(0,16px) rotate(7deg) scaleY(.9)}50%{transform:translate(-6px,10px) rotate(3deg) scaleY(.9)}}
-.stage.end-kneel .doll{transform-origin:50% 50%}
-.stage.end-kneel .doll-inner{transform-origin:50% 50%;transform:translate(0,34px) rotate(-84deg) scaleX(1.06)}
+.legs{transform-box:view-box;transform-origin:100px 200px}
+.kneel-pose{display:none;width:100%;height:auto}
+.stage.end-kneel .kneel-pose{display:block}
+.stage:not(.end-kneel) .kneel-pose{display:none}
+.stage.end-kneel .doll-base,.stage.end-kneel .face-photo,.stage.end-kneel .doll-inner>.wound{display:none}
+.stage.end-kneel #apron{display:none}
+.stage.end-kneel .doll-inner{transform-origin:50% 92%;transform:translate(-8px,22px) rotate(-4deg) scaleY(.96)}
+.stage.end-kneel .legs{transform:rotate(58deg)}
+.stage.end-kneel .leg-r,.stage.end-kneel .foot-r{opacity:0}
+.stage.end-kneel .foot-l{transform:rotate(-58deg);transform-box:view-box;transform-origin:80px 230px}
 .stage.end-arrow .doll-inner{transform:translate(-14px,6px) rotate(-14deg)}
 .stage.end-arrow .arrow{opacity:1;transform:translateX(0) rotate(-13deg)}
 .stage[class*="end-"] .stain{opacity:0;transition:opacity .6s}
-.arcana{max-width:300px;margin:14px auto 0;text-align:center;color:#6a5f52;font-size:12px;letter-spacing:1px;line-height:1.7;min-height:20px}
+.arcana{max-width:320px;margin:0 auto 6px;text-align:center;color:#6a5f52;font-size:12px;letter-spacing:1px;line-height:1.7}
 .arcana .clue{display:block;margin:0;font-family:"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","SimSun",serif}
-.arcana .ln{display:block;margin-top:2px;font-size:14px;letter-spacing:2px;line-height:1.6}
+.arcana .ln{display:block;margin-top:2px;font-size:15px;letter-spacing:2px;line-height:1.65}
 .arcana .ln b{font-weight:600}
 .arcana .lead{color:var(--gold);text-shadow:0 0 10px rgba(216,162,74,.45)}
 .arcana .body{color:#b9ab93;text-shadow:0 0 8px rgba(185,171,147,.28)}
@@ -176,6 +200,7 @@ footer .warn{color:#9c8f7d}
       </label>
       <span class="upload-note" id="uploadNote">只在你手机里处理，不上传</span>
     </div>
+    <div class="arcana kai" id="arcana"></div>
     <div class="stage" id="stage">
       <div class="rope" id="rope"></div>
       <div class="arrow" id="arrow"></div>
@@ -189,12 +214,36 @@ footer .warn{color:#9c8f7d}
       <div class="gore drip" id="gDripB" style="margin-left:-26px;top:66%"></div>
       <div class="gore puddle" id="gPoolA" style="margin-left:-58px"></div>
       <div class="gore puddle" id="gPoolB" style="margin-left:18px;width:78px"></div>
+      <div class="knife" id="knife"><i class="blade"></i><i class="hilt"></i></div>
       <div class="stamp kai" id="stamp">扎满一百针</div>
       <div class="doll" id="doll" data-face="0">
         <div class="doll-inner">
+          <div class="noose" id="noose"></div>
+          <div class="mouth" id="mouth"></div>
+          <svg class="kneel-pose" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="54" cy="38" r="16" fill="#2a2320"/><circle cx="146" cy="38" r="16" fill="#2a2320"/>
+            <ellipse cx="100" cy="66" rx="44" ry="40" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M56 60 a44 40 0 0 1 88 0 q-17 -19 -44 -19 q-27 0 -44 19 z" fill="#2a2320"/>
+            <g class="kface" stroke="#2a2320" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M80 60 q-4 6 0 12 q4 6 -2 12" stroke-width="3"/>
+              <path d="M120 60 q4 6 0 12 q-4 6 2 12" stroke-width="3"/>
+              <ellipse cx="100" cy="86" rx="8" ry="10" fill="#2a2320" stroke="none"/>
+            </g>
+            <path d="M64 108 L136 108 L144 160 L56 160 Z" fill="#b3372c" stroke="#2a2320" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M64 108 L136 108 L132 130 L68 130 Z" fill="#8c2620"/>
+            <text id="apronK" x="100" y="147" text-anchor="middle" font-size="21" fill="#f5eddd" opacity=".85" letter-spacing="1"></text>
+            <path d="M58 118 L38 150" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="34" cy="155" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M142 118 L162 150" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="166" cy="155" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
+            <path d="M80 160 L80 200 L52 208" stroke="#2a2320" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M120 160 L120 200 L148 208" stroke="#2a2320" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <ellipse cx="46" cy="212" rx="15" ry="7" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+            <ellipse cx="154" cy="212" rx="15" ry="7" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+          </svg>
           <div class="wound" id="wound"></div>
           <img id="facePhoto" class="face-photo" alt="">
-          <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+          <svg class="doll-base" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
             <circle cx="54" cy="38" r="16" fill="#2a2320"/><circle cx="146" cy="38" r="16" fill="#2a2320"/>
             <ellipse cx="100" cy="66" rx="44" ry="40" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
             <path d="M56 60 a44 40 0 0 1 88 0 q-17 -19 -44 -19 q-27 0 -44 19 z" fill="#2a2320"/>
@@ -228,7 +277,7 @@ footer .warn{color:#9c8f7d}
               <path d="M110 60 l12 -8 m0 8 l-12 -8" stroke="#2a2320" stroke-width="3.5" stroke-linecap="round"/>
               <ellipse cx="100" cy="86" rx="9" ry="7" fill="#2a2320" stroke="none"/>
             </g>
-            <path d="M64 108 L136 108 L148 200 L52 200 Z" fill="#b3372c" stroke="#2a2320" stroke-width="3.5" stroke-linejoin="round"/>
+            <path class="body-skirt" d="M64 108 L136 108 L148 200 L52 200 Z" fill="#b3372c" stroke="#2a2320" stroke-width="3.5" stroke-linejoin="round"/>
             <path d="M64 108 L136 108 L132 132 L68 132 Z" fill="#8c2620"/>
             <text id="apron" x="100" y="152" text-anchor="middle" font-size="26" fill="#f5eddd" opacity=".3" letter-spacing="2">?</text>
             <path d="M58 168 L142 168" stroke="#d8a24a" stroke-width="4"/>
@@ -237,20 +286,21 @@ footer .warn{color:#9c8f7d}
             <circle cx="40" cy="154" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
             <path d="M130 116 L156 148" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
             <circle cx="160" cy="154" r="10" fill="#f5eddd" stroke="#2a2320" stroke-width="3.5"/>
-            <path d="M84 200 L84 230 M116 200 L116 230" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
-            <ellipse cx="80" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
-            <ellipse cx="120" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+            <g class="legs" id="legs">
+              <path class="leg leg-l" d="M84 200 L84 230" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+              <path class="leg leg-r" d="M116 200 L116 230" stroke="#2a2320" stroke-width="7" stroke-linecap="round"/>
+              <ellipse class="foot foot-l" cx="80" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+              <ellipse class="foot foot-r" cx="120" cy="238" rx="13" ry="8" fill="#f5eddd" stroke="#2a2320" stroke-width="3"/>
+            </g>
           </svg>
         </div>
       </div>
     </div>
     <div class="count">已扎 <b id="cnt">0</b> / 100 针 · <span id="hint">点它，使劲点</span></div>
-    <div class="arcana kai" id="arcana"></div>
     <div class="goal"><i id="bar"></i></div>
     <div class="btns">
       <button class="btn btn-ghost" id="reset">重画一张</button>
       <button class="btn btn-ghost" id="share">分享这个冤种</button>
-      <button class="btn btn-wx" id="shareWx">分享到微信</button>
     </div>
   </div>
   <div class="wiki">
@@ -281,6 +331,10 @@ var doll=document.getElementById("doll"),stage=document.getElementById("stage"),
 var GOAL=100,n=0,ko=false,toastTimer=null,audio=null;
 function paintName(){
   var v=target.value.trim();
+  var ak=document.getElementById("apronK");
+  if(ak){ak.textContent=v||"?";ak.setAttribute("font-family",'"Kaiti SC","STKaiti","KaiTi","Songti SC",serif');
+    ak.setAttribute("opacity",v?".85":".3");
+    if(v&&ak.getComputedTextLength&&ak.getComputedTextLength()>84)ak.setAttribute("font-size",Math.max(9,Math.floor(21*84/ak.getComputedTextLength())));else ak.setAttribute("font-size","21")}
   if(!v){apron.textContent="?";apron.setAttribute("font-size","26");apron.setAttribute("opacity",".3");return}
   apron.textContent=v;
   apron.setAttribute("font-family",'"Kaiti SC","STKaiti","KaiTi","Xingkai SC","STXingkai","Songti SC","STSong",serif');
@@ -341,7 +395,7 @@ function endingTag(){var c=endingCount(),t=endingTotal();
 function clue(){
   // 隐晦线索：不直说有几个，只在见过的还不够时轻声提一句
   var c=endingCount(),t=endingTotal();
-  var head='<span class="ln lead">书上说</span><span class="ln body">扎小人一百针，<em>未必每次</em><br>都断在同一口气上。</span>';
+  var head='<span class="ln lead">书上说</span><span class="ln body">扎小人一百针，<br><em>未必每次</em>都断在同一口气上。</span>';
   if(c<t)return head+'<span class="ln tail">已见 <b>'+c+'</b>／'+t+' · 还差 <b class="hot">'+(t-c)+'</b> 种</span>';
   return head+'<span class="ln tail">五种落幕，<b>一一应验</b>。</span>';
 }
@@ -376,7 +430,14 @@ doll.addEventListener("pointerdown",function(e){e.preventDefault();pierce(e.clie
 function rel(){clearTimeout(holdTimer);clearInterval(holdInt);holdTimer=null;holdInt=null}
 doll.addEventListener("pointerup",rel);doll.addEventListener("pointerleave",rel);doll.addEventListener("pointercancel",rel);
 document.getElementById("reset").addEventListener("click",function(){n=0;ko=false;cnt.textContent="0";bar.style.width="0%";doll.dataset.face="0";doll.classList.remove("ko");stamp.classList.remove("on");stamp.textContent="扎满一百针";resetStage();stage.querySelectorAll(".stain").forEach(function(s){s.remove()});hintEl.textContent="点它，使劲点";showToast("重画一张，再战")});
-document.getElementById("share").addEventListener("click",function(){var name=target.value.trim()||"未知冤种";var msg="我在扎小人扎了 "+n+" 针，目标："+name+"。纯整活，勿当真。"+location.href;if(navigator.share){navigator.share({title:"扎小人",text:msg,url:location.href}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast("复制好了，甩给朋友")}).catch(function(){showToast("复制没成功，手动转发吧")})}else{showToast("不支持分享，截图发吧")}});
+document.getElementById("share").addEventListener("click",function(){
+  var name=target.value.trim()||"未知冤种";
+  var msg="我在扎小人扎了 "+n+" 针，目标："+name+"。纯整活，勿当真。"+location.href;
+  var title="扎小人 - 这次扎"+name;
+  if(/MicroMessenger/i.test(navigator.userAgent||"")){wxSheet();return}
+  if(navigator.share){navigator.share({title:title,text:msg,url:location.href}).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast("复制好了，甩给朋友")}).catch(function(){showToast("复制没成功，手动转发吧")})}
+  else{showToast("不支持分享，截图发吧")}});
 target.addEventListener("keydown",function(e){if(e.key==="Enter")e.target.blur()});
 // ---- 分享到微信：微信网页无法直接调起朋友圈，用长按识别二维码引导
 function sharePoster(){
@@ -432,12 +493,6 @@ function wxSheet(){
   var link=d.querySelector("#wxPoster");
   if(navigator.clipboard)link.addEventListener("click",function(){navigator.clipboard.writeText(url).then(function(){showToast("链接已复制")}).catch(function(){})});
 }
-document.getElementById("shareWx").addEventListener("click",function(){
-  var ua=navigator.userAgent||"";
-  if(/MicroMessenger/i.test(ua)){wxSheet();return}
-  if(navigator.share){navigator.share({title:"扎小人",text:"我在扎小人扎了一百针，纯整活，勿当真。",url:location.href}).catch(function(){})}
-  else{wxSheet();showToast("长按海报保存，或复制链接发微信")}
-});
 target.addEventListener("input",paintName);
 window.addEventListener("resize",function(){paintName()});
 paintName();
