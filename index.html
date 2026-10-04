@@ -52,25 +52,29 @@ h1{font-size:34px;letter-spacing:6px;font-weight:700}
 .stamp.on{transform:rotate(12deg) scale(1);opacity:1}
 .doll-inner{transform-origin:50% 92%}
 .doll[data-face="5"] .f5{display:block}
-.rope{position:absolute;left:50%;top:0;width:5px;height:152px;margin-left:-2.5px;z-index:4;pointer-events:none;opacity:0;transform:scaleY(0);transform-origin:top center;background:repeating-linear-gradient(180deg,#d3bc94 0 7px,#a3855c 7px 14px);border-radius:3px;box-shadow:0 0 8px rgba(0,0,0,.5)}
-.arrow{position:absolute;left:50%;top:50%;width:132px;height:8px;margin:-4px 0 0 6px;z-index:4;pointer-events:none;opacity:0;transform:translateX(150px) rotate(-16deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.15),opacity .15s}
-.arrow::before{content:"";position:absolute;left:-2px;top:50%;width:17px;height:17px;margin-top:-8.5px;background:#2a2320;clip-path:polygon(0 50%,100% 0,100% 100%)}
-.arrow::after{content:"";position:absolute;right:0;top:50%;width:24px;height:18px;margin-top:-9px;background:#b3372c;clip-path:polygon(0 0,100% 26%,100% 74%,0 100%);box-shadow:0 0 6px rgba(0,0,0,.4)}
+.rope{position:absolute;left:50%;top:0;width:5px;height:104px;margin-left:-2.5px;z-index:4;pointer-events:none;opacity:0;transform:scaleY(0);transform-origin:top center;background:repeating-linear-gradient(180deg,#d3bc94 0 7px,#a3855c 7px 14px);border-radius:3px;box-shadow:0 0 8px rgba(0,0,0,.5)}
+.arrow{position:absolute;left:50%;top:58%;width:150px;height:7px;margin:-3.5px 0 0 -66px;z-index:4;pointer-events:none;opacity:0;transform:translateX(210px) rotate(-15deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.15),opacity .15s}
+.arrow::before{content:"";position:absolute;left:-1px;top:50%;width:20px;height:20px;margin-top:-10px;background:#2a2320;clip-path:polygon(100% 50%,0 4%,0 96%)}
+.arrow::after{content:"";position:absolute;left:14px;right:0;top:50%;height:5px;margin-top:-2.5px;background:linear-gradient(90deg,#6a5136 0 74%,var(--red) 74% 100%);border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.55)}
+.pool{position:absolute;left:50%;top:82%;width:104px;height:24px;margin:-12px 0 0 -52px;border-radius:50%;z-index:0;pointer-events:none;opacity:0;transform:scale(.3);transition:opacity .5s,transform .5s;background:radial-gradient(ellipse at center,rgba(125,26,20,.85),rgba(125,26,20,.25) 65%,transparent 78%)}
 .wound{position:absolute;left:50%;top:57%;width:78px;height:34px;margin:-17px 0 0 -39px;z-index:1;pointer-events:none;opacity:0;transform:scale(.15);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1);background:radial-gradient(ellipse at center,rgba(96,18,14,.92),rgba(125,26,20,.4) 62%,transparent 78%)}
 .puff{position:absolute;left:50%;top:44%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;z-index:5;pointer-events:none;background:radial-gradient(circle,rgba(206,194,170,.6),rgba(206,194,170,0) 70%);opacity:0;animation:puffup 1.5s ease-out forwards}
 @keyframes puffup{0%{opacity:.75;transform:translate(0,0) scale(.35)}100%{opacity:0;transform:translate(var(--dx,0px),-104px) scale(1.9)}}
 .stage.end-hang .rope{opacity:1;transform:scaleY(1);transition:opacity .2s,transform .55s cubic-bezier(.3,1.3,.5,1)}
-.stage.end-hang .doll-inner{animation:sway 2.8s ease-in-out .55s infinite}
-@keyframes sway{0%,100%{transform:translateY(-94px) rotate(7deg)}50%{transform:translateY(-94px) rotate(-5deg)}}
-.stage.end-bleed .doll-inner{transform:translate(14px,16px) rotate(64deg)}
-.stage.end-belly .doll-inner{transform:translate(2px,2px);animation:heave .34s ease 4}
+.stage.end-hang .doll-inner{animation:sway 3s ease-in-out .55s infinite;transition:none}
+@keyframes sway{0%,100%{transform:translateY(-62px) rotate(5deg)}50%{transform:translateY(-62px) rotate(-3deg)}}
+.stage.end-bleed .doll{transform-origin:50% 50%}
+.stage.end-bleed .doll-inner{transform-origin:50% 22%;transform:translate(4px,44px) rotate(-88deg)}
+.stage.end-bleed .pool{opacity:1;transform:scale(1)}
+.stage.end-belly .doll-inner{transform:translate(0,16px) rotate(7deg) scaleY(.9);animation:heave .34s ease 4}
 .stage.end-belly .wound{opacity:1;transform:scale(1)}
-@keyframes heave{0%,100%{transform:translate(2px,2px)}50%{transform:translate(-7px,-4px) rotate(-2deg)}}
-.stage.end-kneel .doll-inner{transform:translateY(58px) scaleY(.82)}
-.stage.end-arrow .doll-inner{transform:translate(6px,10px) rotate(-74deg) translate(22px,16px)}
-.stage.end-arrow .arrow{opacity:1;transform:translateX(-8px) rotate(-14deg)}
-.stage.end-smoke .doll-inner{transform:translateY(-26px) scale(.55);opacity:0;transition:transform .7s ease-in,opacity .7s ease-in}
+@keyframes heave{0%,100%{transform:translate(0,16px) rotate(7deg) scaleY(.9)}50%{transform:translate(-6px,10px) rotate(3deg) scaleY(.9)}}
+.stage.end-kneel .doll-inner{transform:translateY(30px) scaleY(.86) scaleX(1.05)}
+.stage.end-arrow .doll-inner{transform:translate(-14px,6px) rotate(-14deg)}
+.stage.end-arrow .arrow{opacity:1;transform:translateX(0) rotate(-13deg)}
+.stage.end-smoke .doll-inner{transform:translateY(-18px) scale(.5);opacity:0;transition:transform .7s ease-in,opacity .7s ease-in}
 .stage.end-smoke .f1{display:block}
+.stage[class*="end-"] .stain{opacity:0;transition:opacity .6s}
 .arcana{max-width:300px;margin:14px auto 0;text-align:center;color:#6a5f52;font-size:12px;letter-spacing:1px;line-height:1.7;min-height:20px}
 .arcana b{color:var(--gold);font-weight:600}
 .arcana:empty{display:none}
@@ -123,6 +127,7 @@ footer .warn{color:#9c8f7d}
     <div class="stage" id="stage">
       <div class="rope" id="rope"></div>
       <div class="arrow" id="arrow"></div>
+      <div class="pool" id="pool"></div>
       <div class="stamp kai" id="stamp">扎满一百针</div>
       <div class="doll" id="doll" data-face="0">
         <div class="doll-inner">
@@ -209,6 +214,7 @@ var doll=document.getElementById("doll"),stage=document.getElementById("stage"),
     apron=document.getElementById("apron"),faceImg=document.getElementById("faceImg"),
     facePhoto=document.getElementById("facePhoto"),rope=document.getElementById("rope"),
     arrowEl=document.getElementById("arrow"),wound=document.getElementById("wound"),
+    pool=document.getElementById("pool"),
     arcana=document.getElementById("arcana");
 var GOAL=100,n=0,ko=false,toastTimer=null,audio=null;
 function paintName(){
@@ -288,9 +294,10 @@ function resetStage(){
   stage.className="stage";
   arcana.innerHTML="";
   if(wound)wound.style.opacity="0";
+  if(pool)pool.style.opacity="";
 }
 function fireEnding(){
-  var key=drawEnding(),e=ENDING[key];
+  var key=drawEnding(),e=ENDINGS[key];
   rounds++;
   seen[key]=true;saveSeen();
   lastEnd=key;
